@@ -1,0 +1,281 @@
+#+title: Script of my talk
+
+* The first slide
+Today, I will be talking about type checking extracted methods.
+
+* What are extracted methods?
+So What are extracted methods?
+
+* The problem
+Before I answer this question, let's take a step back and ask ourselves what objects are. For
+instance, here we have a piece of JavaScript code where the class poin2d is defined. One way to
+answer the question is, by somehow desugaring the instance creation, we find an object is just a record that
+consists of fields representing its internal state and functions to manipulate those states.
+
+* The problem (cont'd)
+Here we have a record that describes a two-dimmensional point that contains the coordinates x
+and y with x being 3, y being 4, and it also contains a function that calculates its distance to the
+origin.
+
+We can then get access to the function just like what we do to any field of a record. Given
+functions are first-class citizens, such a function is inherently an extracted method from an
+object-oriented perspective.
+
+The method ~norm~ is not bound with its original receiver, the record from
+which it was extracted. Obvisouly, the correct way to call this method is to apply it to the
+receiver.
+
+However, this raises two questions: what if we call it with a wrong receiver like 42? Is there a way
+to statically reject such incorrect method calls?
+
+* Why care about extracted methods?
+Why should we care about extracted methods?  The reason is twofold. First, such patterns are used in
+existing untyped code, and enabling a type system to type-check them is one of many goals of gradual
+typing.
+
+More importantly, type-safe extracted methods can serve as a low-level building block to create
+high-level features, (Like generic interfaces, and even an OO system), but they are not a feature
+only for OO systems.
+
+* Real World Example
+Let's take a look at how extracted methods are used in the real world
+
+* JavaScript Example
+First, we define a class for two-dimmensional points using JavaScript.
+
+It has two fields x and y, and the method norm.
+
+Then we create a 2d point, point a, with x being 3 and y being 4.
+
+Next, we bind m to the extracted method norm.
+
+Lastly, we apply ~m~ to the original receiver point a, and the evaluation result is 5.
+
+* Python Example
+Now let's look at a python example.
+
+The class definition is similar to that in our Javascript
+Example.
+
+We also create a two-dimmensional point here
+
+and we then extract the method from pt-a.
+
+Unlike in JavaScript, when we call the extracted method, the receiver is not needed.
+
+* Java Example
+Here is a Java example.
+
+Likewise, we have a class named point2d defined
+
+and we create a 2d point.
+
+One major difference in this example is, we extract a method from the class Point2D instead of a
+Point2d instance.
+
+* Racket Example
+Now let's see how racket handles extracted methods.
+
+For starters, we use a structure type property, a Vtable-like mechanism to dispatch methods. Here we
+use it to define a property named norm, which expects its value to be a function. point2d's value
+expresion for the property norm is a function whose only parameter is the receiver.
+
+Next, we also create a two-dimmensional point, point a
+
+and then we extract the method norm from point-a using the property accessor for property norm.
+
+Then, we apply the extract edmethod to the original receiver point-a.
+
+Now we take a look at the beta reduction of this application. This is replaced with pt-a.
+
+and then we call point2d-x and point2d-y to pt-a respectively and get 3 and 4.
+
+
+We leave the rest to the arithmetic funtions, which give us back 5 as the final result.
+
+* Whatif
+After seeing those examples in practce, let's turn to one of the question we asked in the beginning of the talk:
+what if we give an extracted method a wrong receiver?
+
+* Whatif Python
+Let's take a look at the python example first. Here, we don't need to pass the receiver back to the
+extracted method.  This is because the extracted method inherently is a closure over its receiver.
+
+* Whatif Java
+In Java's case, in order to use reflection to extract a method, we are required to write down
+exception handlers.  For example, here since we want to invoke the method norm with 42, at runtime, an exception
+will be raised and handled in one of these exception handlers.
+
+* Whatif JavaScript
+On the contrary, Javascript doesn't do anything to stop us from shooting ourselves in the foot.
+
+Here we call the extracted method with 42.
+
+What will happen at runtime is
+
+this becomes 42. Since 42 doesn't a field named either x or y, 42.x and 42.y reduce to undefined.
+
+In JavaScript, when arithmetic operations take in something that is not a number, they return the
+Not-A-Number.
+
+* Whatif Racket
+Racket falls into the same category for Javascript.
+
+The only difference is when the struct field accessor point2d-x or poin2d-y runs into 42, it raises
+an exception.
+
+* Summarize
+Now let us pause for a second. We have seen three approaches to deal with extracted methods. The
+first approach, represented by python, doesn't need runtime checks but extracted methods are not
+unbound. Languages like Java provide a way to safely handle extracted method calls but with dynamic
+checks. The Doing-nothing approach requires no runtime checks but provide no safety.
+
+Then this brings back the other question we asked in the begining: can we statically rule out those errors ? In other words, how a type system can help with extracted methods?
+
+* Unsound Method Extraction in Flow
+First, let's look at a flow example.
+
+The Flow code is almost the same as the JavaScript one except for these type annotations.
+
+However, Flow doesn't do too much to check extracted method calls, as shown by this example.
+
+Here we call the extracted method meth with 42, since the receiver for the call method in Flow can
+be any value, we end up in the same situation as we did with plain JavaScript, i.e. This
+becomes 42, Both 42.x and 42.y are undefined, and the final result is Not A Number.
+
+* Method Extraction in TypeScript
+TypeScript, on the other hand, does check the receiver to the `call` method.
+
+Here, if we call the method with 42, the type checker will reject the program.
+
+If we pass the original receiver back to the method, the type checker is happy.
+
+* Unsound Method Extraction in TypeScript
+Nevertheless, Method Extraction is still unsound in TypeScript. Let's take a look at another
+exapmle.
+
+On the left hand side, we have the definition of our old friend class Point2D.
+
+On the right hand side, for three-dimensional points, we have a new class named point3d, which
+inherits Point2D. Since we have one more coordinate, we changed the constructor and the method norm
+accordingly.
+
+In addition to pt_a, we create a three-dimensional point pt_b, but annotate it with type
+Point2D.
+
+Next we extract the method norm from pt_b
+
+and call it with pt_a. Since the method statically comes from a Point2D, the type checker has
+no problem with this call site.
+
+Unfortunately, the extracted method is actually from a three-dimensional point. So when we run the
+program, this become pt_a, since pt_a only has two fields x and y, pt_a.z reduces to undefined. The
+whole function call returns not a number.
+
+* Summarize again
+Apparently, Neither Flow nor TypeScript provides a sound way to handle method extraction.
+
+On the other hand, our approach, implemented in Typed Racket, statically checks extracted methods in a
+sound manner. Now let's take a dive.
+
+* Sound Method Extraction in Typed Racket
+The defintions of two structures are quite similar to those in TypeScript(except for the
+parentheses). For the time being, let's skip over the structure definitions.
+
+Likewise, we have a three-dimensional point pt-b with the annotated type being point2d.
+
+Then, we bind m to the extracted the method norm from pt-b.
+
+Now, if we apply m to 42, the type checker will reject the program.
+
+If the receiver is pt-a, the type checker will still reject it too.
+
+So the only possible receiver that will make the type checker happy is pt-b itself.
+
+
+* Walkthrough
+Now let's take a closer look at how Typed Racket handles this.
+
+* Sound Method Extraction in Typed Racket
+First, let's focus on how the method norm is extracted and used. Before the norm-accessor is called,
+in the type environment, we know pt-a is a point2d and pt-b is a point3d.
+
+After the application, however, pt-b is an intersection type of point2d and X, and the extracted method
+m has function type X to number.
+
+Because neither 42 nor pt-a has anything to do with the type X, We are not allowed to
+apply m to either of them.
+
+we can only call m with the original receiver pt-b.
+
+(Action: next)
+
+Now you might want to ask what norm-accessor does behind the scene? What does its type tell us?
+Well, in order to answer those two questions, let me use the type for the property predicate to
+briefly go over how occurence typing works.
+
+
+* Walkthrough2
+The type of this predicate, like any type predicates in any languages, says it takes any value and
+returns a boolean. However, the type after : denotes the proposition, which means if any value
+passes the predicate, then it has the type Has-Struct-Property prop:norm. Otherwise, it does not
+have the type.
+
+Now, let's assume there is a variable called val that has a union type of (String and Has-Struct-Property
+prop:norm). In the beginning, the type environment reflects what we've
+already known.
+
+Before we apply the predicate to val, the type environment remains the same.
+
+However, in the then branch, i.e. the predicate holds true for val, we learn it is no longer of a
+union type. it has type Has-Struct-Property prop:norm.
+
+wheras, in the else branch, we learn val is a string.
+
+
+Equipped with this knowledge of occurence typing, let's move on to the type of norm-accessor.
+
+Unlike the type of the predicate, we use an existential type result to introduce a fresh type
+variable, X.
+
+It appears in the return function type, and the proposition. Note that when the norm-accessor is
+called, the existential type result is automatically unpacked.
+
+So before the call site, we know pt-a is a two-dimmensional point, and pt-b is a three-dimensional
+point.
+
+After the call site, we learn pt-b also has a unique type, X. m is a function from X to
+number.
+
+The uniqueness of type X is how we rule out all extracted method calls with incorrect receivers
+
+while ensuring the only receiver is the instance the method is extracted from.
+
+However, our approach seems to have a problem. If we apply m to another three-dimensional
+point, the type checker will reject the expression as well. But it looks like a safe method call, doesn't
+it? Well, it is not that simple.
+
+* Why only the receiver?
+It seems that the cominbation of inheritance, in particular, method overriding and function
+subtyping makes extracted method invariant in the receiver type. However, in a system with pervasive
+subtyping, this is not gonna happen. Let's use a clear counterexample to demonstrate the problem.
+
+Let's say pt-a and pt-b is statically known to have type (Has-struct-property prop:norm), m's
+parameter type is the same as pt-b's. This means applying m to pt-a will pass the type
+check. However, dynamically, pt-b is a point3d, and pt-a is a point2d, so we would end up with the
+same runtime type error we have been talking about so far in this talk.
+
+* Also in the paper
+we present a formal model with a soundness proof.  we evaluated our changes using 164 typed racket
+packages from the official racket catalog.  40 of them ....  Note that this feature had been ignored
+by the type checker for a long time. 15 years ago, when Sam was a graduate student at Northeastern
+and writing Typed Racket in his aparment in Cambridge, he found this feature was quite tricky to
+implement so he put it aside, but he decided that it would be a great project for one of his future
+students. Apparently that didn't stop people from using this feature without a seat belt. After we
+enabled this feature, 38 packages worked correctly. Only 2 failed to typecheck: one was because of
+missing annotations, the other was a bug. After it was fixed, that package was built successfully.
+
+* Summary
+To recap, because of a novel combination of occurence typing and existential types, typed racket
+provides a static sound way to check unbound extracted methods. Our evalution showed our approach
+worked for 40 packages. Most importantly, this feature has been shipping in Racket since version 8.2.
