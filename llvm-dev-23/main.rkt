@@ -1,6 +1,8 @@
 #lang slideshow
 
+(require "../lib/lib.rkt")
 (require "title.rkt")
 
 (module+ main
-  (title))
+  (main-title)
+  (title-only-slide #:title "Problems"))
