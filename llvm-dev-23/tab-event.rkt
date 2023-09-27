@@ -1,26 +1,26 @@
 #lang slideshow
-(require ppict/slideshow2
+(require ppict/2
          pict/code
+         (prefix-in mp: metapict)
          "utils.rkt")
 (provide (all-defined-out))
 
 (define (tab-event)
-  (define fst (cc-superimpose
-                (filled-rounded-rectangle 50 50 #:color "purple")
-                (text "Tab")))
-  (define snd (cc-superimpose
-                           (filled-rounded-rectangle 100 50 #:color "purple")
-                           (text "ReplListCompleter")))
-  (define combined (hc-append 100 fst snd))
+  (mp:current-inner-separation 0.2)
+  (define tenode (mp:rounded-rectangle-node "tab event" #:color "purple"))
+  (define operator (mp:rounded-rectangle-node
+                    "operator()(StringRef Buffer, size_t Pos)"
+                    #:color "purple" #:right-of tenode))
+  (define completer-node (mp:rounded-rectangle-node "ReplListCompleter" #:color "purple" #:above operator))
+
+  (define e1 (mp:edge tenode operator))
+  (define e2 (mp:edge completer-node operator))
   (pslide #:layout 'center
           (parameterize ([get-current-code-font-size (lambda () (- (current-font-size) 10))])
             (repl-input "struct WhateverMeaningfulLoooooooooongName { int field;};"
                         "Wh⇥"))
-          (pin-arrow-line 10
-                          combined
-                          fst rc-find
-                          snd lc-find
-                          #:line-width 3)))
+          #:go (coord 0.3 0.85 'cb)
+          (mp:draw tenode completer-node operator e1 e2)))
 
 (module+ main
   (tab-event))
