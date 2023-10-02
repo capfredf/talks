@@ -9,6 +9,7 @@
 (require "new-attempt.rkt")
 (require "visibility-of-decls.rkt")
 (require "new-context.rkt")
+(require "original-plan.rkt")
 
 (module+ main
   (main-title)
@@ -22,4 +23,5 @@
   (title-only-slide #:title "Problems")
   (visibility-of-decls)
   (new-context)
-  (title-only-slide #:title "Semantic Code Completion"))
+  (title-only-slide #:title "Semantic Code Completion")
+  (original-plan))
