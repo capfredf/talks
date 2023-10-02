@@ -58,11 +58,28 @@
             #:go (coord 0.4 0.5 'cb)
             (apply repl-input (drop deltas i)))))
 
+(define (merge-contexts2)
+  (define font (mp:make-similar-font (mp:new-font)
+                                     #:size 10))
+  (parameterize ([mp:current-inner-separation 0.2]
+                 [mp:current-neighbour-distance 5])
+    (define main-node (mp:with-font font (mp:rectangle-node "MainAstContext")))
+    (define current-node (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node)))
+    (define edge (mp:edge main-node current-node #:label ".setExternalSource"))
+    (pslide #:title "Visibility of Declarations"
+            #:go (coord 0.4 0.5 'cb)
+            (apply repl-input "..." deltas)
+            #:go (coord 0.3 0.7 'cb)
+            (mp:draw main-node current-node edge))))
+
 (define (merge-contexts3)
   (define font (mp:make-similar-font (mp:new-font)
                                      #:size 10))
   (parameterize ([mp:current-inner-separation 0.2]
                  [mp:current-neighbour-distance 5])
+    (define main-node0 (mp:with-font font (mp:rectangle-node "MainAstContext")))
+    (define current-node0 (mp:with-font font (mp:rectangle-node "CurrentAstContext"   #:right-of main-node0)))
+    (define edge0 (mp:edge main-node0 current-node0 #:label ".setExternalSource"))
     (define main-node (mp:with-font font (mp:rectangle-node "MainAstContext")))
     (define current-node (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node)))
     (define edge (mp:edge main-node current-node #:label "ASTImporter::import"))
@@ -70,6 +87,8 @@
             #:go (coord 0.4 0.5 'cb)
             (apply repl-input "..." deltas)
             #:go (coord 0.3 0.7 'cb)
+            (mp:draw main-node0 current-node0 edge0)
+            #:go (coord 0.3 0.8 'cb)
             (mp:draw main-node current-node edge))
 
     (define decls (list "foo" "fruit" "flight"))
@@ -80,6 +99,8 @@
               #:go (coord 0.4 0.5 'cb)
               (tag-pict (apply repl-input "..." deltas) 'repl-input)
               #:go (coord 0.3 0.7 'cb)
+              (mp:draw main-node0 current-node0 edge0)
+              #:go (coord 0.3 0.8 'cb)
               (mp:draw main-node current-node edge nodes
                        (map (lambda (n)
                               (mp:edge current-node n))
@@ -89,11 +110,15 @@
 
 
 (define (visibility-of-decls)
-  ;; (visibility-of-decls-repl)
-  ;; (visibility-of-decls-single-file)
-  ;; (side-by-side)
-  ;;(merge-contexts1)
+  (visibility-of-decls-repl)
+  (visibility-of-decls-single-file)
+  (side-by-side)
+  (merge-contexts1)
+  (merge-contexts2)
   (merge-contexts3))
 
 (module+ main
-  (merge-contexts3))
+  (visibility-of-decls)
+  #;(merge-contexts2)
+  #;(merge-contexts3)
+  )
