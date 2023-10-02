@@ -7,6 +7,7 @@
 (require "regular.rkt")
 (require "first-attempt.rkt")
 (require "new-attempt.rkt")
+(require "visibility-of-decls.rkt")
 
 (module+ main
   (main-title)
@@ -17,4 +18,5 @@
   (regular)
   (first-attempt)
   (new-attempt)
-  (title-only-slide #:title "Problems"))
+  (title-only-slide #:title "Problems")
+  (visibility-of-decls))

@@ -8,13 +8,13 @@
 (provide (all-defined-out))
 
 
-(define (visibilty-of-decls)
+(define (visibility-of-decls-repl)
   (pslide #:title "Visibility of Declarations"
           #:layout 'center
           (repl-input "int foo = 42;"
                       "int res = 1 + f█ ")))
 
-(define (visibilty-of-decls-single-file)
+(define (visibility-of-decls-single-file)
   (pslide #:title "Visibility of Declarations"
           #:layout 'center
           (code-block "int foo = 42;"
@@ -48,7 +48,10 @@
           (text "TWO ASTContxts" null 20)))
 
 
+(define (visibility-of-decls)
+  (visibility-of-decls-repl)
+  (visibility-of-decls-single-file)
+  (side-by-side))
+
 (module+ main
-  (visibilty-of-decls)
-  (visibilty-of-decls-single-file)
   (side-by-side))
