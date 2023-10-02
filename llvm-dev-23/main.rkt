@@ -2,7 +2,7 @@
 
 (require "../lib/lib.rkt")
 (require "title.rkt")
-(require "problems.rkt")
+(require "motivations.rkt")
 (require "tab-event.rkt")
 (require "regular.rkt")
 (require "first-attempt.rkt")

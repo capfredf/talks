@@ -6,9 +6,12 @@
 (provide (all-defined-out))
 
 (define prompt "clang-repl> ")
-(define (repl-input #:fontsize [font-size (- (current-font-size) 10)] . lines)
+(define (code-block #:font-size [font-size (- (current-font-size) 10)] . lines)
   (parameterize ([get-current-code-font-size (lambda () font-size)])
-    (codeblock-pict (string-join (map (lambda (n)
-                                        (string-append prompt n))
-                                      lines)
-                                 "\n"))))
+    (codeblock-pict (string-join lines "\n"))))
+
+(define (repl-input #:font-size [font-size (- (current-font-size) 10)] . lines)
+  (apply code-block (map (lambda (n)
+                           (string-append prompt n))
+                         lines)
+         #:font-size font-size))
