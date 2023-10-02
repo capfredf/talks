@@ -8,6 +8,7 @@
 (require "first-attempt.rkt")
 (require "new-attempt.rkt")
 (require "visibility-of-decls.rkt")
+(require "new-context.rkt")
 
 (module+ main
   (main-title)
