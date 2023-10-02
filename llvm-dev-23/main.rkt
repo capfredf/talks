@@ -20,4 +20,6 @@
   (first-attempt)
   (new-attempt)
   (title-only-slide #:title "Problems")
-  (visibility-of-decls))
+  (visibility-of-decls)
+  (new-context)
+  (title-only-slide #:title "Semantic Code Completion"))
