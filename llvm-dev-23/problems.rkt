@@ -10,8 +10,8 @@
   (slide #:title "hello"))
 
 
-(define (problems)
-  (pslide #:title "Problems"
+(define (motivations)
+  (pslide #:title "Motivations"
           #:next
           (item "Avoid Tedious Typing")
           (repl-input "struct WhateverMeaningfulLoooooooooongName{ int field;};"
@@ -25,4 +25,4 @@
                       "Banana fruitIsBanana(42);"
                       "getApple(f<tab>")))
 (module+ main
-  (problems))
+  (motivations))
