@@ -7,23 +7,6 @@
          "utils.rkt")
 (provide (all-defined-out))
 
-
-;; (define (visibility-of-decls-repl)
-;;   (pslide #:title "Visibility of Declarations"
-;;           #:layout 'center
-;;           (repl-input "int foo = 42;"
-;;                       "int res = 1 + f█ ")))
-
-;; (define (visibility-of-decls-single-file)
-;;   (pslide #:title "Visibility of Declarations"
-;;           #:layout 'center
-;;           (code-block "int foo = 42;"
-;;                       "int res = 1 + f█ "))
-;;   (pslide #:title "Visibility of Declarations"
-;;           #:layout 'center
-;;           (code-block "int foo = 42;"
-;;                       "int res = 1 + foo")))
-
 (define (side-by-side)
   (pslide #:title "Visibility of Declarations"
           #:layout 'center
@@ -59,40 +42,27 @@
           (text "TWO ASTContxts" null 20)))
 
 (define deltas (list "int flight = 84;" "int fruit = 76;" "int foo = 42;" "int res = 1 + f█ "))
-(define (merge-contexts1)
-  ;; (pslide #:title "Visibility of Declarations"
-  ;;         #:go (coord 0.5 0.5 'cb)
-  ;;         (repl-input "int foo = 42;"
-  ;;                     "int res = 1 + f█ "))
-  (for ([i (in-range 3 -1 -1)])
-    (pslide #:title "Visibility of Declarations"
-            #:go (coord 0.4 0.5 'cb)
-            (apply repl-input (drop deltas i)))))
 
-(define (merge-contexts2)
-  (define font (mp:make-similar-font (mp:new-font)
-                                     #:size 10))
-  (parameterize ([mp:current-inner-separation 0.2]
-                 [mp:current-neighbour-distance 5])
-    (define main-node (mp:with-font font (mp:rectangle-node "MainAstContext")))
-    (define current-node (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node)))
-    (define edge (mp:edge main-node current-node #:label ".setExternalSource"))
-    (pslide #:title "Visibility of Declarations"
-            #:go (coord 0.4 0.5 'cb)
-            (apply repl-input "..." deltas)
-            #:go (coord 0.3 0.7 'cb)
-            (mp:draw main-node current-node edge))))
+(define font (mp:make-similar-font (mp:new-font)
+                                   #:size 10))
+
+(define (new-main-ast-node)
+  (mp:with-font font (mp:rectangle-node "MainAstContext" #:fill "orange")))
+
+(define (new-current-ast-node main-node)
+  (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node #:fill "blue")))
+
 
 (define (merge-contexts3)
   (define font (mp:make-similar-font (mp:new-font)
                                      #:size 10))
   (parameterize ([mp:current-inner-separation 0.2]
                  [mp:current-neighbour-distance 5])
-    (define main-node0 (mp:with-font font (mp:rectangle-node "MainAstContext")))
-    (define current-node0 (mp:with-font font (mp:rectangle-node "CurrentAstContext"   #:right-of main-node0)))
+    (define main-node0 (new-main-ast-node))
+    (define current-node0 (new-current-ast-node  main-node0))
     (define edge0 (mp:edge main-node0 current-node0 #:label ".setExternalSource"))
-    (define main-node (mp:with-font font (mp:rectangle-node "MainAstContext")))
-    (define current-node (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node)))
+    (define main-node (new-main-ast-node))
+    (define current-node (new-current-ast-node main-node))
     (define edge (mp:edge main-node current-node #:label "ASTImporter::import"))
     (pslide #:title "Visibility of Declarations"
             #:go (coord 0.4 0.5 'cb)
@@ -121,11 +91,7 @@
 
 
 (define (visibility-of-decls)
-  ;; (visibility-of-decls-repl)
-  ;; (visibility-of-decls-single-file)
   (side-by-side)
-  (merge-contexts1)
-  (merge-contexts2)
   (merge-contexts3))
 
 (module+ main
