@@ -10,16 +10,17 @@
 (define (filter-candidates)
   (pslide #:title "Filter Candidates"
           #:layout 'center
-          (code-block "When a PreferredType is not Null,")
+          (t "When a PreferredType is not Null,")
           (code-block "for (auto Candidate : CompletionCandiates)"
                       "    if (isCompatible(Candidate.getType(), PreferredType))"
                       "        saveAsCompletionString(Candidate)")
-          (code-block "isCompatible(Type CandidateType, Type PreferredType) ")
-          (code-block "isCompatible(Integer, Integer) = true")
-          (code-block "isCompatible(Integer, Integer&) = true")
-          (code-block "isCompatible(Integer, String) = false")
-          (code-block "isCompatible(Car &, Vehicle&) = true")
-          (code-block "isCompatible(Car &, Sedan &) = false")))
+          (code-block "isCompatible(clang::Type CandidateType, clang::Type PreferredType) ")
+          (t "Examples:")
+          (code-block "isCompatible(<int>, <int>) = true")
+          (code-block "isCompatible(<int>, <int&>) = true")
+          (code-block "isCompatible(<int>, <std::string>) = false")
+          (code-block "isCompatible(<CXXRecord:Car &>, <CXXRecord:Vehicle &>) = true")
+          (code-block "isCompatible(<CXXRecord:Car &>, <CXXRecord:Sedan &>) = false")))
 
 (module+ main
   (filter-candidates))
