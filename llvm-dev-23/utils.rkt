@@ -15,3 +15,8 @@
                            (string-append prompt n))
                          lines)
          #:font-size font-size))
+
+(define-syntax-rule (define-sequence-nodes seq-id (node constr) ...)
+  (begin
+    (define node constr) ...
+    (define seq-id (list node ...))))

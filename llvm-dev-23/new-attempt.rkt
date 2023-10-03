@@ -6,11 +6,6 @@
          "utils.rkt")
 (provide (all-defined-out))
 
-(define-syntax-rule (define-sequence-nodes seq-id (node constr) ...)
-  (begin
-    (define node constr) ...
-    (define seq-id (list node ...))))
-
 (define (new-attempt)
   (mp:current-inner-separation 0.2)
   (define font (mp:make-similar-font (mp:new-font)
