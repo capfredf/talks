@@ -12,6 +12,7 @@
 (require "original-plan.rkt")
 (require "how-sema-works.rkt")
 (require "filter-candidates.rkt")
+(require "sumup.rkt")
 
 (module+ main
   (main-title)
@@ -28,4 +29,6 @@
   (title-only-slide #:title "Semantic Code Completion")
   (original-plan)
   (how-sema-works)
+  (filter-candidates)
+  (sum-up)
   (title-only-slide #:title "Q & A"))
