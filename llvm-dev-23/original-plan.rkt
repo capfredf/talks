@@ -7,14 +7,13 @@
          "utils.rkt")
 (provide (all-defined-out))
 
-
 (define (original-plan)
   (pslide #:title "Original Plan"
           #:layout 'center
           (item (tag-pict (t "Parse the current line of input") 'text))
-          (repl-input "apple.█")
+          (repl-input "f█")
           (repl-input "strlen(█")
-          (repl-input "1 + f█")
+          (repl-input "apple.█")
           #:next
           #:go (at-find-pict 'text lc-find 'lc)
           (hline 500 5)
