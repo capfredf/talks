@@ -12,6 +12,6 @@
     (define name (img-func path))))
 
 (define-static-img iu-logo "iu-logo.png")
-(define-static-img llvm-logo "llvm_logo.png")
+(define-static-img compiler-research-team-logo "compiler-research-team-logo.png")
 (define-static-img why "why.png")
 

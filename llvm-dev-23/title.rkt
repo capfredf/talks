@@ -8,7 +8,7 @@
                     #:authors
                     ["Yuquan (Fred) Fu" "Vassil Vassilev"]
                     #:logos
-                    [(iu-logo) (llvm-logo 0.21)]
+                    [(iu-logo) (compiler-research-team-logo 0.21)]
                     ;; Logos
                     ;; GSoC
                     ;; IU
