@@ -11,6 +11,7 @@
 (require "new-context.rkt")
 (require "original-plan.rkt")
 (require "how-sema-works.rkt")
+(require "filter-candidates.rkt")
 
 (module+ main
   (main-title)
