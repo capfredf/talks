@@ -8,21 +8,21 @@
 (provide (all-defined-out))
 
 
-(define (visibility-of-decls-repl)
-  (pslide #:title "Visibility of Declarations"
-          #:layout 'center
-          (repl-input "int foo = 42;"
-                      "int res = 1 + f█ ")))
+;; (define (visibility-of-decls-repl)
+;;   (pslide #:title "Visibility of Declarations"
+;;           #:layout 'center
+;;           (repl-input "int foo = 42;"
+;;                       "int res = 1 + f█ ")))
 
-(define (visibility-of-decls-single-file)
-  (pslide #:title "Visibility of Declarations"
-          #:layout 'center
-          (code-block "int foo = 42;"
-                      "int res = 1 + f█ "))
-  (pslide #:title "Visibility of Declarations"
-          #:layout 'center
-          (code-block "int foo = 42;"
-                      "int res = 1 + foo")))
+;; (define (visibility-of-decls-single-file)
+;;   (pslide #:title "Visibility of Declarations"
+;;           #:layout 'center
+;;           (code-block "int foo = 42;"
+;;                       "int res = 1 + f█ "))
+;;   (pslide #:title "Visibility of Declarations"
+;;           #:layout 'center
+;;           (code-block "int foo = 42;"
+;;                       "int res = 1 + foo")))
 
 (define (side-by-side)
   (pslide #:title "Visibility of Declarations"
@@ -34,6 +34,17 @@
           #:go (coord 0.5 0.5 'lb)
           (tag-pict (repl-input "int foo = 42;"
                                 "int res = 1 + f█ ")
+                    'right))
+
+  (pslide #:title "Visibility of Declarations"
+          #:layout 'center
+          #:go (coord 0.2 0.5 'lb)
+          (tag-pict (code-block "int foo = 42;"
+                                "int res = 1 + foo█")
+                    'left)
+          #:go (coord 0.5 0.5 'lb)
+          (tag-pict (repl-input "int foo = 42;"
+                                "int res = 1 + f█  ")
                     'right)
           #:go (coord 0.495 0.5 'lb)
           #:next
@@ -110,15 +121,12 @@
 
 
 (define (visibility-of-decls)
-  (visibility-of-decls-repl)
-  (visibility-of-decls-single-file)
+  ;; (visibility-of-decls-repl)
+  ;; (visibility-of-decls-single-file)
   (side-by-side)
   (merge-contexts1)
   (merge-contexts2)
   (merge-contexts3))
 
 (module+ main
-  (visibility-of-decls)
-  #;(merge-contexts2)
-  #;(merge-contexts3)
-  )
+  (visibility-of-decls))
