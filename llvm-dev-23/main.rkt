@@ -10,6 +10,7 @@
 (require "visibility-of-decls.rkt")
 (require "new-context.rkt")
 (require "original-plan.rkt")
+(require "how-sema-works.rkt")
 
 (module+ main
   (main-title)
@@ -24,4 +25,6 @@
   (visibility-of-decls)
   (new-context)
   (title-only-slide #:title "Semantic Code Completion")
-  (original-plan))
+  (original-plan)
+  (how-sema-works)
+  (title-only-slide #:title "Q & A"))
