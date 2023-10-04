@@ -11,7 +11,7 @@ ClangRepl is a project inspired by Cling from the Root Project. It features a
 REPL environment which enables C++ programmers to develop programs in an
 exploratory manner.
 
-<Examples ...> you can do this and that.
+<Examples ...> you can do this and that after a repl prompt
 
 [Slide Motivations]
 
@@ -30,8 +30,8 @@ information. As in this case, we have defined two structs, Apple and Banana, the
 function getApple that takes a reference to an apple. We also have one apple
 instance and banana instance. When we hit tab after the letter "f" at the call
 site of getApple, showing both identifiers `fruitIsBanana` and `fruitIsApple`
-seems to leave something to be desired.  Because `fruitIsBanana` is not an apple
-whatsoever. So ideally our system should complete f with fruitIsApple.
+seems to leave something to be desired because `fruitIsBanana` is not an apple
+whatsoever. Ideally our system should complete f with fruitIsApple.
 
 
 [Slide Implementation]
@@ -98,9 +98,11 @@ First, we make the main ast context the external source of the current ast conte
 Next, we go through the chain and import every declaration defined from the main
 context into current context, from `foo` to `flight`.
 
+[missing showing completion result after foo]
+
 [Slide New Context]
 
-The other problem is by default, Clang can't do code completion in a top level
+The other problem is by default, Clang is unable to do code completion in a top level
 expression, since in a regular c++ file, expression statements are not allowed
 to appear at a top level. But top level expressions are bread and butter in repl. 
 
@@ -127,7 +129,7 @@ heavy-lifting job for us.
 
 [Slide Original Plan Contd]
 
-Next, we thought we need to extract type information regarding the cursor position. 
+Next, we thought we needed to extract type information regarding the cursor position. 
 
 For example, Suppose, the constructor of Foo takes an interger and a string and
 we are doing code completion for the second argument to a call of this
@@ -143,17 +145,9 @@ information.
 
 Recall that one key method in code completion is ProcessCodeCompleteResults. 
 
-The first parameter is a reference of Sema
+The key to solve the issues we mentioned the previous two slides is the `Context` here
 
-The second is a CodeCompletionContext.
-
-The third is a pointer to an array of completion results.
-
-The last is the size of the array.
-
-The key to solve the issues we mentioned the previous two slides is Context here
-
-If the completion text kind is TopLevelOrExpression and PreferredType is not set,
+If the completion context kind is TopLevelOrExpression and the PreferredType is not set,
 
 There are no type constraints on completion results.
 
@@ -177,6 +171,9 @@ latter, it is a subclass reference of the latter, and etc.
 
 [Slide sum up]
 
-To achieve code completion in repl, we first solved the vibility issue of declarations defined in the main context with ASTImporter and External Source.
+To achieve code completion in repl, we first solved the vibility issue of
+declarations defined in the main context with ASTImporter and External Source.
 
-we enabled code completion in top level expressions by adding a new CompletionContextKind. Lastly, we showed how we leveraged Sematic Analysis modules to achieve semantic code completion.
+we enabled code completion in top level expressions by adding a new
+CompletionContextKind. Lastly, we showed how we leveraged Sematic Analysis
+modules to achieve semantic code completion.

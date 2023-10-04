@@ -1,6 +1,7 @@
 #lang racket
 (require ppict/slideshow2
          slideshow/base
+         (prefix-in mp: metapict)
          pict/code)
 
 (provide (all-defined-out))
@@ -20,3 +21,13 @@
   (begin
     (define node constr) ...
     (define seq-id (list node ...))))
+
+(define (get-code-completion-at input)
+  (match-define (cons hd tl) (string-split input "⇥"))
+  (string-length hd))
+
+(define-syntax-rule (my-job-node params ...)
+  (let ()
+    (define font (mp:make-similar-font (mp:new-font)
+                                       #:size 10))
+    (mp:rectangle-node params ... #:fill "orange")))

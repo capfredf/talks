@@ -9,11 +9,14 @@
 
 (define (regular)
   (mp:current-inner-separation 0.2)
+  (define input "int res = 1 + f⇥")
+  (define line 2)
+  (define col (get-code-completion-at input))
   (define font (mp:make-similar-font (mp:new-font) #:size 10))
   (define-sequence-nodes nodes-to-draw
     (compiler-instance-node (mp:with-font font (mp:rectangle-node "New CompilerInstance"  #:min-width 5)))
     (setup-node (mp:with-font font (mp:rectangle-node "Set up all lot of configs" #:right-of compiler-instance-node)))
-    (one-tweak-node (mp:with-font font (mp:rectangle-node "FrontendOpts.CompletionAt = {\"hello_world.cpp\", 1, 2}" #:right-of setup-node #:min-width 7.3)))
+    (one-tweak-node (mp:with-font font (mp:rectangle-node (format "FrontendOpts.CompletionAt = {\"hello_world.cpp\", ~a, ~a}" line col) #:right-of setup-node #:min-width 7.3)))
     (syntax-action-node (mp:with-font font (mp:rectangle-node "New SyntaxOnlyAction" #:right-of one-tweak-node #:min-width 5)))
     (execute-node (mp:with-font font (mp:rectangle-node "Execute" #:below syntax-action-node)))
     (create-default-consumer-node (mp:with-font font (mp:rectangle-node "createDefaultPrintConsumer()" #:below execute-node)))
@@ -28,8 +31,8 @@
   (pslide #:title "How Code Completion Works"
           #:go (coord 0.5 0.2 'cb)
           (code-block "int foo = 42;"
-                      "int res = 1 + f█")
-          (code-block "clang++ -cc1 -fsyntax-only -code-completion-at=hello_world.cpp:1:2 hello_world.cpp:1:2")
+                      "int res = 1 + f⇥")
+          (code-block (format "clang++ -cc1 -fsyntax-only -code-completion-at=hello_world.cpp:~a:~a hello_world.cpp:~a:~a" line col line col))
           #:go (coord 0.15 0.5 'cb)
           (apply mp:draw (append nodes-to-draw edges))))
 
