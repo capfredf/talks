@@ -8,6 +8,7 @@
          racket/class
          racket/contract
          racket/draw
+         syntax/parse/define
          racket/runtime-path
          (for-syntax syntax/parse racket/base)
          pict/flash)
@@ -33,6 +34,6 @@
    elts ...))
 
 
-(define-syntax-rule (title-only-slide #:title title elts ...)
-  (parameterize ([current-font-size (+ (current-font-size) 80)])
+(define-syntax-parse-rule (title-only-slide #:title title (~optional (~seq #:font-size font-size) #:defaults ([font-size #'80])) elts ...)
+  (parameterize ([current-font-size (+ (current-font-size) font-size)])
     (center-slide #:title title elts ...)))
