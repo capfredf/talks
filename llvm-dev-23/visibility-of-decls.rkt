@@ -7,8 +7,10 @@
          "utils.rkt")
 (provide (all-defined-out))
 
+(define slide-title "Declaration Visibility Issue")
+
 (define (side-by-side)
-  (pslide #:title "Visibility of Declarations"
+  (pslide #:title slide-title
           #:layout 'center
           #:go (coord 0.2 0.5 'lb)
           (tag-pict (code-block "int foo = 42;"
@@ -19,7 +21,7 @@
                                 "int res = 1 + f█ ")
                     'right))
 
-  (pslide #:title "Visibility of Declarations"
+  (pslide #:title slide-title
           #:layout 'center
           #:go (coord 0.2 0.5 'lb)
           (tag-pict (code-block "int foo = 42;"
@@ -34,12 +36,11 @@
           #:alt [(rectangle 150 52 #:border-color "red" #:border-width 4)]
           #:go (at-find-pict 'left lt-find 'lt)
           (rectangle 250 60 #:border-color "red" #:border-width 4)
-          (text "ONE ASTContxt" null 20)
-          #:next
+          (text "ONE ASTContext" null 20)
           #:go (at-find-pict 'right lt-find 'lt)
           (rectangle 400 30 #:border-color "red" #:border-width 4)
           (rectangle 400 30 #:border-color "red" #:border-width 4)
-          (text "TWO ASTContxts" null 20)))
+          (text "TWO ASTContexts" null 20)))
 
 (define deltas (list "int flight = 84;" "int fruit = 76;" "int foo = 42;" "int res = 1 + f█ "))
 
@@ -64,7 +65,8 @@
     (define main-node (new-main-ast-node))
     (define current-node (new-current-ast-node main-node))
     (define edge (mp:edge main-node current-node #:label "ASTImporter::import"))
-    (pslide #:title "Visibility of Declarations"
+    (define slide-title^ (string-append "Solution to " slide-title))
+    (pslide #:title slide-title^
             #:go (coord 0.4 0.5 'cb)
             (apply repl-input "..." deltas)
             #:go (coord 0.3 0.7 'cb)
@@ -76,7 +78,7 @@
     (for ([(_ idx) (in-indexed decls)])
       (define nodes (for/list ([(t i) (in-indexed (take decls (add1 idx)))])
                       (mp:with-font font (mp:rectangle-node t #:at (mp:pt 11 (- 1 i))))))
-      (pslide #:title "Visibility of Declarations"
+      (pslide #:title slide-title^
               #:go (coord 0.4 0.5 'cb)
               (tag-pict (apply repl-input "..." deltas) 'repl-input)
               #:go (coord 0.3 0.7 'cb)
