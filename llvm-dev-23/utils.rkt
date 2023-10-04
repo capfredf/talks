@@ -8,8 +8,12 @@
 
 (define prompt "clang-repl> ")
 (define (code-block #:font-size [font-size (- (current-font-size) 10)] . lines)
-  (parameterize ([get-current-code-font-size (lambda () font-size)])
+  (parameterize ([get-current-code-font-size (lambda () font-size)]
+                 [current-token-class->color token-class-color])
     (codeblock-pict (string-join lines "\n"))))
+
+(define (token-class-color s)
+  "black")
 
 (define (repl-input #:font-size [font-size (- (current-font-size) 10)] . lines)
   (apply code-block (map (lambda (n)
