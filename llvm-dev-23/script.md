@@ -21,16 +21,15 @@ Now let's move on to our project: Code Completion in ClangRepl. Why do we need t
 
 First of all, we really want to type as less as we can. Like here, we have a
 struct with a very long name, I know I exagerated a little bit. It is really
-annoying that we that we need to type all the symbols without code completion or
-use copy and paste. But with code completion, users can hit tab and the result
-gets completed
+annoying to type all the symbols or even use copy and paste. But with code
+completion, users can hit tab and the result gets completed
 
-In addition, code completion should be able to offer more relevant context-aware
-information. As in this case, we have defined two structs, Apple and Banana, the
-function getApple that takes a reference to an apple. We also have one apple
-instance and banana instance. When we hit tab after the letter "f" at the call
-site of getApple, showing both identifiers `fruitIsBanana` and `fruitIsApple`
-seems to leave something to be desired because `fruitIsBanana` is not an apple
+Moreover, code completion should be able to offer context-aware information. As
+in this case, we have defined two structs, Apple and Banana, the function
+getApple that takes a reference to an apple. We also have one apple instance and
+banana instance. When we hit tab after the letter "f" at the call site of
+getApple, showing both identifiers `fruitIsBanana` and `fruitIsApple` seems to
+leave something to be desired because `fruitIsBanana` is not an apple
 whatsoever. Ideally our system should complete f with fruitIsApple.
 
 

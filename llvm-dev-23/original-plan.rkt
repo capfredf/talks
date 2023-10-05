@@ -18,7 +18,7 @@
           #:go (at-find-pict 'text lc-find 'lc)
           (hline 500 5)
           #:go (at-find-pict 'text lt-find 'lb)
-          (t "Clang/Parse* do it for me"))
+          (t "Clang/Sema/* do it for me"))
   (define type-str "createNewFoo : Int -> String -> Foo")
   (define mytt (lambda (x) (text x  (current-tt-font) (- (or (current-tt-font-size) (current-font-size)) 5))))
   (define type-pict (mytt type-str))
@@ -36,7 +36,7 @@
           #:go (at-find-pict 'text lc-find 'lc)
           (hline 700 5)
           #:go (at-find-pict 'text lt-find 'lb)
-          (t "Sema/* do it for me")))
+          (t "Clang/Sema/* do it for me")))
 
 (module+ main
   (original-plan))
