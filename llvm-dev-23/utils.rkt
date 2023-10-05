@@ -1,6 +1,7 @@
 #lang racket
 (require ppict/slideshow2
          slideshow/base
+         racket/draw
          (prefix-in mp: metapict)
          pict/code)
 
@@ -13,7 +14,7 @@
     (codeblock-pict (string-join lines "\n"))))
 
 (define (token-class-color s)
-  "black")
+  (make-object color% #x58 #x6e #x75))
 
 (define (repl-input #:font-size [font-size (- (current-font-size) 10)] . lines)
   (apply code-block (map (lambda (n)
