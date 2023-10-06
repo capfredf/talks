@@ -22,6 +22,15 @@
                          lines)
          #:font-size font-size))
 
+(define (repl-input/with-output #:font-size [font-size (- (current-font-size) 10)] . in/outs)
+  (apply code-block (append-map (lambda (n)
+                                  (match n
+                                    [(cons in out) (cons (string-append prompt in)
+                                        out)]
+                                    [_ (list (string-append prompt n))]))
+                         in/outs)
+         #:font-size font-size))
+
 (define-syntax-rule (define-sequence-nodes seq-id (node constr) ...)
   (begin
     (define node constr) ...

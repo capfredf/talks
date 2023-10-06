@@ -16,8 +16,8 @@
 
 (module+ main
   (main-title)
-  (title-only-slide #:title "Motivations")
-  (motivations)
+  (title-only-slide #:title "Demo")
+  (demo)
   (title-only-slide #:title "Implementation")
   (tab-event)
   (regular)
