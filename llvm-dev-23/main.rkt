@@ -1,8 +1,9 @@
 #lang slideshow
 
 (require "../lib/lib.rkt")
+(require "clang-repl.rkt")
 (require "title.rkt")
-(require "motivations.rkt")
+(require "demo.rkt")
 (require "tab-event.rkt")
 (require "regular.rkt")
 (require "first-attempt.rkt")
@@ -16,6 +17,8 @@
 
 (module+ main
   (main-title)
+  (title-only-slide #:title "What is ClangRepl")
+  (what-is-clang-repl)
   (title-only-slide #:title "Demo")
   (demo)
   (title-only-slide #:title "Implementation")
@@ -23,12 +26,12 @@
   (regular)
   (first-attempt)
   (new-attempt)
-  (title-only-slide #:title "Problems")
+  (title-only-slide #:title "Challenges")
   (visibility-of-decls)
   (new-context)
   (title-only-slide #:title "Semantic Code Completion" #:font-size 40)
   (original-plan)
   (how-sema-works)
-  (filter-candidates)
+  ;; (filter-candidates)
   (sum-up)
   (title-only-slide #:title "Q & A"))
