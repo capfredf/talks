@@ -7,38 +7,23 @@
          "utils.rkt")
 (provide (all-defined-out))
 
+(define (annotate p1 anno)
+  (ht-append p1 anno))
 (define (how-sema-works)
-  (pslide #:title "How to use Sema"
-          #:go (coord 0.1 0.1 'lt)
-          (code-block "ProcessCodeCompleteResults(Sema &S, CodeCompletionContext Context,"
-                      "                           CodeCompletionResult *InResults, unsigned NumResults)")
-          (item (code-block "Context.getKind() == CCC_TopLevelOrExpression"))
-          (subitem (code-block "Context.getPreferedType().isNull()"))
-          #:go (coord 0.15 0.3 'lt)
-          5
-          (text "no constraints based on types" (current-main-font) (- (current-font-size) 5))
-          (repl-input "f⇥")
-          (code-block "foo"
-                      "float")
-          #:go (coord 0.1 0.52 'lt)
-          (subitem (code-block "!Context.getPreferedType().isNull()"))
-          #:go (coord 0.15 0.58 'lt)
-          (text "there is a preferred type for candidates" (current-main-font) (- (current-font-size) 5))
-          (repl-input "strlen(⇥")
-          (code-block "cstr1"
-                      "cstr2"))
-  (pslide #:title "How to use Sema"
-          #:go (coord 0.1 0.1 'lt)
-          (code-block "ProcessCodeCompleteResults(Sema &S, CodeCompletionContext Context,"
-                      "                           CodeCompletionResult *InResults, unsigned NumResults)")
-          (item (code-block "Context.getKind() == CCC_DotMemberAccess"))
-          (subitem (code-block "Context.getBaseType() => Apple"))
-          #:go (coord 0.15 0.3 'lt)
-          (repl-input "class Apple {public: int getPrice(){...} void sell(Person& p){...}}"
-                      "Apple apple1"
-                      "apple1.⇥")
-          (code-block "getPrice"
-                      "sell")))
+  (pslide #:title "Key Structure for Sematic Code Completion"
+          #:go (coord 0.15 0.15 'lt)
+          (current-gap-size)
+          (tt "CodeCompletionContext")
+          (item (t "Context.getKind() tells us the context kind"))
+          (annotate (repl-input "c█") (code-block "<==== CCC_TopLevelOrExpression"))
+          (annotate (repl-input "car.█") (code-block "<===== CCC_DotMemberAccess"))
+          (item (t "Context.getPreferedType() tells us the type w.r.t the current cursor position"))
+          (annotate (repl-input "pickOne(name1, █)") (code-block "<====== std::string")))
+  (pslide #:title "Key Structure for Sematic Code Completion"
+          (item (t "Context.getBaseType() gets us the type of the expressions before the dot"))
+          (repl-input/with-output "class Car {public: int getPrice(){...} void sell(Person& p){...}}"
+                                  "Car car1"
+                                  (list "car1.⇥" "getPrice" "sell"))))
 
 (module+ main
   (how-sema-works))
