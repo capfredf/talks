@@ -31,7 +31,7 @@
   (visibility-of-decls)
   (new-context)
   (title-only-slide #:title "Semantic Code Completion" #:font-size 40)
-  (original-plan)
+  (what-sema-comp-needs)
   (how-sema-works)
   ;; (filter-candidates)
   (sum-up)
