@@ -23,7 +23,18 @@
                            "std::string str = \"Hello, World!\";"
                            (list "std::cout << str << \" has \" << str.length() << \"characters!\\n\";"
                                  "Hello, World! has 13 characters!")
-                           "str.⇥")))
+                           "str.⇥")
+   #:next
+   #:go (coord 0.245 0.605 'ct)
+   (tag-pict (filled-rectangle 100 3 #:draw-border? #f #:color "red") 'line)
+   #:go (coord 0.5 0.7 'cc)
+   (tag-pict (t "My Project!") 'text)
+   #:set (let ([p ppict-do-state])
+           (pin-arrow-line 10 p
+                           (find-tag p 'line) cb-find
+                           (find-tag p 'text) lt-find
+                           #:line-width 3
+                           #:color "red"))))
 
 (module+ main
   (what-is-clang-repl))
