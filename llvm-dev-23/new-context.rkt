@@ -9,24 +9,32 @@
 (provide (all-defined-out))
 
 (define (new-context)
-  (pslide #:title "New Completion Context Kind"
-          #:layout 'center
-          (tag-pict (repl-input "int foo = 42;"
-                                "1 + f█ ")
-                    'repl)
-          #:go (at-find-pict 'repl lb-find 'lb #:abs-x 150)
-          (rectangle 200 30 #:border-color "red" #:border-width 4)
+  (pslide #:title "Code Completion for Top Level Expressions"
+          #:layout 'tall
+          (item "Top level expressions are syntactically invalid in a regular C++ file")
+          (item "Top level expressions are bread and butter in REPL")
+          #:go (coord 0.3 0.3 'lt)
+          #:alt [(repl-input "int num = 42;"
+                             "1 + n⇥ ")]
+          (repl-input "int num = 42;"
+                             "1 + n█ ")
+          ;; #:go (at-find-pict 'repl lb-find 'lb #:abs-x 150)
+          ;; (rectangle 200 30 #:border-color "red" #:border-width 4)
           #:next
-          #:go (coord 0.4 0.6 'lt)
+          ;; #:go (coord 0.4 0.7 'lt)
           #:alt [(text "CompletionContext::Kind = CCC_TopLevel" (list (make-object color% "red")) 20)]
           (text "CompletionContext::Kind = CCC_TopLevelOrExpression" (list (make-object color% "dark green")) 20))
 
-  (pslide #:title "New Completion Context Kind"
-          #:layout 'center
-          (tag-pict (repl-input "int foo = 42;"
-                                "1 + foo ")
-                    'repl)
-          #:go (coord 0.4 0.6 'lt)
+  (pslide #:title "Code Completion for Top Level Expressions"
+          #:layout 'tall
+          (item "Top level expressions are syntactically invalid in a regular C++ file")
+          (item "Top level expressions are bread and butter in REPL")
+          #:go (coord 0.3 0.3 'lt)
+          #:alt [(repl-input "int num = 42;"
+                             "1 + n⇥ ")
+                 (text "CompletionContext::Kind = CCC_TopLevelOrExpression" (list (make-object color% "dark green")) 20)]
+          (repl-input "int num = 42;"
+                      "1 + num ")
           (text "CompletionContext::Kind = CCC_TopLevelOrExpression" (list (make-object color% "dark green")) 20)))
 
 
