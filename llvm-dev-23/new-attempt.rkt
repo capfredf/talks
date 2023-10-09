@@ -8,7 +8,7 @@
 
 (define (new-attempt)
   (mp:current-inner-separation 0.2)
-  (define input "int res = 1 + f⇥")
+  (define input "int res = 1 + n⇥")
   (define col (get-code-completion-at input))
   (define font (mp:make-similar-font (mp:new-font)
                                      #:size 10))
@@ -30,7 +30,7 @@
   (define edges (map mp:edge (take extras (sub1 (length extras))) (cdr extras)))
   (pslide #:title "Using ASTUnit"
           #:go (coord 0.5 0.2 'cb)
-          (repl-input "int foo = 42;" input)
+          (repl-input "int num = 42;" input)
           #:go (coord 0.23 0.5 'cb)
           (apply mp:draw extras edges;;(append left-nodes edges (list ASTUnitCC-node) extras)
                  )))

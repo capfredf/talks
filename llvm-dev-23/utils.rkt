@@ -56,3 +56,10 @@
     (define font (mp:make-similar-font (mp:new-font)
                                        #:size 10))
     (mp:rectangle-node params ... #:fill "orange")))
+
+
+(define-syntax-rule (regular-node params ...)
+  (let ()
+    (define font (mp:make-similar-font (mp:new-font)
+                                       #:size 10))
+    (mp:rectangle-node params ...)))
