@@ -14,8 +14,10 @@
 (require "how-sema-works.rkt")
 (require "contributions.rkt")
 (require "sumup.rkt")
+(require racket/draw)
 
 (module+ main
+  (current-page-number-font (make-object font% 25 'default))
   (main-title)
   (title-only-slide #:title "What is ClangRepl")
   (what-is-clang-repl)
@@ -32,5 +34,4 @@
   (first-attempt)
   (new-attempt)
   ;; (filter-candidates)
-  (conclusions)
-  (title-only-slide #:title "Q & A"))
+  (conclusions))

@@ -15,3 +15,4 @@
 (define-static-img compiler-research-team-logo "compiler-research-team-logo.png")
 (define-static-img why "why.png")
 
+(define-static-img gsoc-logo "gsoc.png")
