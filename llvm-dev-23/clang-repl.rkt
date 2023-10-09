@@ -32,7 +32,8 @@
    #:set (let ([p ppict-do-state])
            (pin-arrow-line 10 p
                            (find-tag p 'line) cb-find
-                           (find-tag p 'text) lt-find
+                           (find-tag p 'text) lc-find
+                           #:start-angle (- (* (/ pi 360) 190))
                            #:line-width 3
                            #:color "red"))))
 
