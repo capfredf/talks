@@ -9,27 +9,88 @@
 
 (define slide-title "Declaration Visibility Issue")
 
+(define deltas (list "int num1 = 84;" "int num2 = 76;" "int num3 = 42;" "int res = 1 + n⇥  "))
+(define deltas-over (list "int num1 = 84;" "int num2 = 76;" "int num3 = 42;" (list "int res = 1 + n█ ") (list "num1" "num2" "num3")))
+(define deltas-cursor (list "int num1 = 84;" "int num2 = 76;" "int num3 = 42;" "int res = 1 + n█ "))
 (define (side-by-side)
   (pslide #:title slide-title
-          #:layout 'center
-          #:go (coord 0.2 0.5 'lb)
-          (tag-pict (code-block "int foo = 42;"
-                                "int res = 1 + f█ ")
-                    'left)
-          #:go (coord 0.5 0.5 'lb)
-          (tag-pict (repl-input "int foo = 42;"
-                                "int res = 1 + f█ ")
-                    'right))
+          #:go (coord 0.2 0.4 'lt)
+          (apply code-block deltas)
+          #:go (coord 0.5 0.4 'lt)
+          (apply repl-input deltas))
 
+  (pslide #:title slide-title
+          #:go (coord 0.2 0.4 'lt)
+          (tag-pict (apply code-input/with-output deltas-over)
+                    'left)
+          #:go (coord 0.5 0.4 'lt)
+          (tag-pict (apply repl-input deltas-cursor)
+                    'right)
+          ;; #:go (coord 0.495 0.5 'lb)
+          ;; #:next
+          ;; #:alt [(rectangle 150 52 #:border-color "red" #:border-width 4)]
+          ;; #:go (at-find-pict 'left lt-find 'lt)
+          ;; (rectangle 250 60 #:border-color "red" #:border-width 4)
+          ;; (text "ONE ASTContext" null 20)
+          ;; #:go (at-find-pict 'right lt-find 'lt)
+          ;; (rectangle 400 30 #:border-color "red" #:border-width 4)
+          ;; (rectangle 400 30 #:border-color "red" #:border-width 4)
+          #;
+          (text "TWO ASTContexts" null 20))
+
+  (define regular-pict (apply code-block deltas))
+  (define repl-pict (apply repl-input deltas))
+  #;
+  (pslide #:title slide-title
+          #:layout 'tall
+          (t "Why does code completion fail to see previously defined declaration in REPL?")
+          (item "A file is one single translation unit defined by one ASTContext")
+          (tag-pict regular-pict 'regular)
+          #:go (at-find-pict 'regular lt-find 'lt #:abs-x -2 #:abs-y -2)
+          (tag-pict (rectangle (+ 4 (pict-width regular-pict)) (+ 4 (pict-height regular-pict)) #:border-color "red" #:border-width 4) 'highlight)
+          #:go (at-find-pict 'highlight lb-find 'lt #:abs-x -10 #:abs-y 5)
+          (text "1 ASTContext & 1 TranslationUnit" null 20))
+
+  (pslide #:title slide-title
+          #:layout 'top
+          (t "Why does code completion fail to see previously defined declaration in REPL?")
+          (item "A file is one single translation unit defined by one ASTContext")
+          (tag-pict regular-pict 'regular)
+          #:go (at-find-pict 'regular lt-find 'lt #:abs-x -2 #:abs-y -2)
+          (tag-pict (rectangle (+ 4 (pict-width regular-pict)) (+ 4 (pict-height regular-pict)) #:border-color "red" #:border-width 4) 'highlight)
+          #:go (at-find-pict 'highlight lb-find 'lt #:abs-x -10 #:abs-y 5)
+          (text "1 ASTContext & 1 TranslationUnit" null 20))
+
+
+  (pslide #:title slide-title
+          #:layout 'top
+          (t "Why does code completion fail to see previously defined declaration in REPL?")
+          (item "A REPL session contains multiple partial translation units defined by two ASTContexts")
+          (tag-pict repl-pict 'pict)
+          #:go (at-find-pict 'pict lt-find 'lt #:abs-x -2 #:abs-y -2)
+          (rectangle (+ 4 (pict-width repl-pict)) (+ 1 (/ (pict-height repl-pict) 4)) #:border-color "red" #:border-width 4)
+          (rectangle (+ 4 (pict-width repl-pict)) (+ 1 (/ (pict-height repl-pict) 4)) #:border-color "red" #:border-width 4)
+          (rectangle (+ 4 (pict-width repl-pict)) (+ 1 (/ (pict-height repl-pict) 4)) #:border-color "red" #:border-width 4)
+          (rectangle (+ 4 (pict-width repl-pict)) (+ 1 (/ (pict-height repl-pict) 4)) #:border-color "red" #:border-width 4)
+          #; (colorize (hline (+ 4 (pict-width repl-pict)) (+ 4 (* 1 (/ (pict-height repl-pict) 4)))) "red")
+          ;; (rectangle (+ 4 (pict-width repl-pict)) (+ 4 (pict-height repl-pict)) #:border-color "red" #:border-width 4)
+          ;; (rectangle (+ 4 (pict-width repl-pict)) (+ 4 (pict-height repl-pict)) #:border-color "red" #:border-width 4)
+          ;; #:go (at-find-pict 'highlight lb-find 'lt #:abs-x -10 #:abs-y 5)
+          (text "2 ASTContexts & 4 PartialTranslationUnits" null 20)
+          #;(rectangle 400 30 #:border-color "red" #:border-width 4)
+          #:go (coord 0.1 0.6 'lt)
+          (subitem "Note that we also cannot pollute other translation units when doing completion."))
+
+  #;
   (pslide #:title slide-title
           #:layout 'center
           #:go (coord 0.2 0.5 'lb)
-          (tag-pict (code-block "int foo = 42;"
-                                "int res = 1 + foo█")
+          (tag-pict (code-block "int num = 42;"
+                                "int res = 1 + num█")
                     'left)
           #:go (coord 0.5 0.5 'lb)
-          (tag-pict (repl-input "int foo = 42;"
-                                "int res = 1 + f█  ")
+          (tag-pict (repl-input "int num = 42;"
+                                "int res = 1 + n█  ")
                     'right)
           #:go (coord 0.495 0.5 'lb)
           #:next
@@ -42,7 +103,7 @@
           (rectangle 400 30 #:border-color "red" #:border-width 4)
           (text "TWO ASTContexts" null 20)))
 
-(define deltas (list "int flight = 84;" "int fruit = 76;" "int foo = 42;" "int res = 1 + f█ "))
+
 
 (define font (mp:make-similar-font (mp:new-font)
                                    #:size 10))
@@ -67,6 +128,10 @@
     (define edge (mp:edge main-node current-node #:label "ASTImporter::import"))
     (define slide-title^ (string-append "Solution to " slide-title))
     (pslide #:title slide-title^
+            (item "make the main ASTContext an ExternalSource of the current ASTContext")
+            (item "use ASTImporter to import every decl from the Main ASTContext to the current one"))
+
+    (pslide #:title slide-title^
             #:go (coord 0.4 0.5 'cb)
             (apply repl-input "..." deltas)
             #:go (coord 0.3 0.7 'cb)
@@ -74,7 +139,7 @@
             #:go (coord 0.3 0.8 'cb)
             (mp:draw main-node current-node edge))
 
-    (define decls (list "foo" "fruit" "flight"))
+    (define decls (list "num1" "num2" "num3"))
     (for ([(_ idx) (in-indexed decls)])
       (define nodes (for/list ([(t i) (in-indexed (take decls (add1 idx)))])
                       (mp:with-font font (mp:rectangle-node t #:at (mp:pt 11 (- 1 i))))))
