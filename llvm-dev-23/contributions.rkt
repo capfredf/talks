@@ -10,7 +10,7 @@
 
 (define (contributions)
   (pslide #:title "Contributions"
-          (item "Implement code completion in ClangRepl by levaraging Sema/* modules")
+          (item "Implement basic code completion in ClangRepl by levaraging Sema/* modules")
           (item "Implement semantic code completion")))
 
 (module+ main

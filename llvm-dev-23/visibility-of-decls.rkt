@@ -15,16 +15,16 @@
 (define (side-by-side)
   (pslide #:title slide-title
           #:go (coord 0.2 0.4 'lt)
-          (apply code-block deltas)
+          (apply code-block deltas #:font-size 25)
           #:go (coord 0.5 0.4 'lt)
-          (apply repl-input deltas))
+          (apply repl-input deltas #:font-size 25))
 
   (pslide #:title slide-title
           #:go (coord 0.2 0.4 'lt)
-          (tag-pict (apply code-input/with-output deltas-over)
+          (tag-pict (apply code-input/with-output deltas-over #:font-size 25)
                     'left)
           #:go (coord 0.5 0.4 'lt)
-          (tag-pict (apply repl-input deltas-cursor)
+          (tag-pict (apply repl-input deltas-cursor #:font-size 25)
                     'right)
           ;; #:go (coord 0.495 0.5 'lb)
           ;; #:next
@@ -38,8 +38,8 @@
           #;
           (text "TWO ASTContexts" null 20))
 
-  (define regular-pict (apply code-block deltas))
-  (define repl-pict (apply repl-input deltas))
+  (define regular-pict (apply code-block deltas  #:font-size 25))
+  (define repl-pict (apply repl-input deltas  #:font-size 25))
   #;
   (pslide #:title slide-title
           #:layout 'tall
@@ -59,7 +59,8 @@
           #:go (at-find-pict 'regular lt-find 'lt #:abs-x -2 #:abs-y -2)
           (tag-pict (rectangle (+ 4 (pict-width regular-pict)) (+ 4 (pict-height regular-pict)) #:border-color "red" #:border-width 4) 'highlight)
           #:go (at-find-pict 'highlight lb-find 'lt #:abs-x -10 #:abs-y 5)
-          (text "1 ASTContext & 1 TranslationUnit" null 20))
+          40
+          (text "1 ASTContext & 1 TranslationUnit" null 30))
 
 
   (pslide #:title slide-title
@@ -76,7 +77,7 @@
           ;; (rectangle (+ 4 (pict-width repl-pict)) (+ 4 (pict-height repl-pict)) #:border-color "red" #:border-width 4)
           ;; (rectangle (+ 4 (pict-width repl-pict)) (+ 4 (pict-height repl-pict)) #:border-color "red" #:border-width 4)
           ;; #:go (at-find-pict 'highlight lb-find 'lt #:abs-x -10 #:abs-y 5)
-          (text "2 ASTContexts & 4 PartialTranslationUnits" null 20)
+          (text "2 ASTContexts & 4 PartialTranslationUnits" null 30)
           #;(rectangle 400 30 #:border-color "red" #:border-width 4)
           #:go (coord 0.1 0.6 'lt)
           (subitem "Note that we also cannot pollute other translation units when doing completion."))
@@ -133,28 +134,31 @@
 
     (pslide #:title slide-title^
             #:go (coord 0.4 0.5 'cb)
-            (apply repl-input "..." deltas)
+            (apply repl-input "..." deltas  #:font-size 25)
             #:go (coord 0.3 0.7 'cb)
             (mp:draw main-node0 current-node0 edge0)
             #:go (coord 0.3 0.8 'cb)
             (mp:draw main-node current-node edge))
 
     (define decls (list "num1" "num2" "num3"))
-    (for ([(_ idx) (in-indexed decls)])
-      (define nodes (for/list ([(t i) (in-indexed (take decls (add1 idx)))])
-                      (mp:with-font font (mp:rectangle-node t #:at (mp:pt 11 (- 1 i))))))
-      (pslide #:title slide-title^
-              #:go (coord 0.4 0.5 'cb)
-              (tag-pict (apply repl-input "..." deltas) 'repl-input)
-              #:go (coord 0.3 0.7 'cb)
-              (mp:draw main-node0 current-node0 edge0)
-              #:go (coord 0.3 0.8 'cb)
-              (mp:draw main-node current-node edge nodes
-                       (map (lambda (n)
-                              (mp:edge current-node n))
-                            nodes))
-              #:go (at-find-pict 'repl-input lt-find 'lt #:abs-y (- 90 (* 30 idx)))
-              (rectangle 400 25 #:border-color "red" #:border-width 4)))))
+    (let ([deltas (cons "..." deltas)])
+      (define data (tag-pict (apply repl-input deltas #:font-size 25) 'repl-input))
+      (define ht (/ (pict-height data) (length deltas)))
+      (for ([(_ idx) (in-indexed decls)])
+        (define nodes (for/list ([(t i) (in-indexed (take decls (add1 idx)))])
+                        (mp:with-font font (mp:rectangle-node t #:at (mp:pt 11 (- 1 i))))))
+        (pslide #:title slide-title^
+                #:go (coord 0.4 0.5 'cb)
+                data
+                #:go (coord 0.3 0.7 'cb)
+                (mp:draw main-node0 current-node0 edge0)
+                #:go (coord 0.3 0.8 'cb)
+                (mp:draw main-node current-node edge nodes
+                         (map (lambda (n)
+                                (mp:edge current-node n))
+                              nodes))
+                #:go (at-find-pict 'repl-input lt-find 'lt #:abs-y (- (pict-height data) (* ht (+ 2 idx))))
+                (rectangle 400 ht #:border-color "red" #:border-width 4))))))
 
 
 (define (visibility-of-decls)

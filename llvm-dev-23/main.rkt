@@ -24,7 +24,7 @@
   (title-only-slide #:title "Demo")
   (demo)
   (contributions)
-  (title-only-slide #:title "Challenges")
+  ;; (title-only-slide #:title "Steps")
   (visibility-of-decls)
   (new-context)
   (title-only-slide #:title "Semantic Code Completion" #:font-size 40)
