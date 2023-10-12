@@ -21,7 +21,7 @@
   (main-title)
   (title-only-slide #:title "What is ClangRepl")
   (what-is-clang-repl)
-  (title-only-slide #:title "Demo")
+  (title-only-slide #:title "What we achieved")
   (demo)
   (contributions)
   ;; (title-only-slide #:title "Steps")

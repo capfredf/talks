@@ -4,10 +4,10 @@
 (provide (all-defined-out))
 
 (define (demo)
-  (for ([i (list "Wh⇥" "WhateverMeaningfulLoooooooooongName")])
+  (for ([i (list "Mo⇥" "ModulePointerAndOffsetLessThanFunctionObject")])
     (pslide #:title "Basic Code Completion"
             #:go (coord 0.15 0.4 'lt)
-            (repl-input #:font-size 25 "struct WhateverMeaningfulLoooooooooongName{ int field;};"
+            (repl-input #:font-size 25 "struct ModulePointerAndOffsetLessThanFunctionObject{ ... };"
                         i)))
 
   (for ([j (list "pickOne(number1, ⇥" (list "pickOne(number1, █" "number1" "number2"))])
