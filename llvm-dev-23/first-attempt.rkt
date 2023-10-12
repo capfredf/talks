@@ -28,15 +28,17 @@
 
     ;; (define edges (list (mp:edge (car nodes-to-draw) (cadr nodes-to-draw))))
 
-    (for ([i (in-range (length nodes-to-draw))])
-      (let ([nodes-to-draw (take nodes-to-draw (add1 i))])
+    (for/fold ([acc 0])
+              ([i (in-list '(1 3 4 2))])
+      (let ([nodes-to-draw (take nodes-to-draw (+ acc i))])
         (define edges (map mp:edge (take nodes-to-draw (sub1 (length nodes-to-draw))) (cdr nodes-to-draw)))
         (pslide #:title "First Attempt"
                 #:go (coord 0.5 0.2 'cb)
                 (parameterize ([get-current-code-font-size (lambda () (- (current-font-size) 10))])
                   (repl-input "int num = 42;" input))
                 #:go (coord 0.15 0.5 'cb)
-                (apply mp:draw (append nodes-to-draw edges))))))
+                (apply mp:draw (append nodes-to-draw edges))))
+      (+ acc i)))
 
   (define (static)
     (define col (get-code-completion-at input))

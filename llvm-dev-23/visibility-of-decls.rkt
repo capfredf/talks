@@ -14,6 +14,7 @@
 (define deltas-cursor (list "int num1 = 84;" "int num2 = 76;" "int num3 = 42;" "int res = 1 + n█ "))
 (define (side-by-side)
   (pslide #:title slide-title
+          #:comments ("The challenge we faced was that the code completion system couldn't see the declarations defined before the current line. To illustrate the problem, here we compare code completion in a regular file with that in REPL using the same content")
           #:go (coord 0.2 0.4 'lt)
           (apply code-block deltas #:font-size 25)
           #:go (coord 0.5 0.4 'lt)
@@ -79,6 +80,7 @@
           ;; #:go (at-find-pict 'highlight lb-find 'lt #:abs-x -10 #:abs-y 5)
           (text "2 ASTContexts & 4 PartialTranslationUnits" null 30)
           #;(rectangle 400 30 #:border-color "red" #:border-width 4)
+          #;#;#;
           #:go (coord 0.1 0.6 'lt)
           (subitem "Note that we also cannot pollute other translation units when doing completion."))
 
@@ -113,7 +115,7 @@
   (mp:with-font font (mp:rectangle-node "MainAstContext" #:fill "orange")))
 
 (define (new-current-ast-node main-node)
-  (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node #:fill "blue")))
+  (mp:with-font font (mp:rectangle-node "CurrentAstContext" #:right-of main-node #:fill "sky blue")))
 
 
 (define (merge-contexts3)
@@ -128,6 +130,7 @@
     (define current-node (new-current-ast-node main-node))
     (define edge (mp:edge main-node current-node #:label "ASTImporter::import"))
     (define slide-title^ (string-append "Solution to " slide-title))
+    #;
     (pslide #:title slide-title^
             (item "make the main ASTContext an ExternalSource of the current ASTContext")
             (item "use ASTImporter to import every decl from the Main ASTContext to the current one"))

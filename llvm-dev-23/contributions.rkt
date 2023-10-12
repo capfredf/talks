@@ -10,8 +10,8 @@
 
 (define (contributions)
   (pslide #:title "Contributions"
-          (item "Implement basic code completion in ClangRepl by levaraging Sema/* modules")
-          (item "Implement semantic code completion")))
+          (item "Overcame challenges of using Sema/CodeComplete in REPL to implement basic code completion")
+          (item "Utilized key structures in Sema for semantic code completion")))
 
 (module+ main
   (contributions))
