@@ -9,8 +9,13 @@
 
 (define (what-is-clang-repl)
   (pslide ;;
-          ;; (item "ClangRepl is a C++ interpreter inspired by Cling.")
-          ;; (item "It feature a REPL that let C++ programmers develop software in an exploratory manner")
+   ;; (item "ClangRepl is a C++ interpreter inspired by Cling.")
+   ;; (item "It feature a REPL that let C++ programmers develop software in an exploratory manner")
+   #:comments ("For starters, let's chat a little more about ClangRepl, since not everyone here
+knows what it is. ClangRepl is fundamentally an interpreter built-up llvm
+compiler pipeline, It allows C++ programmres to an exploratory manner. Like
+here, we defined a string, and use it as a part of content we print out to the
+standand output.")
    (repl-input/with-output #:font-size 25
                            "#include <iostream>"
                            "std::string str = \"Hello, World!\";"
@@ -18,6 +23,7 @@
                                  "Hello, World! has 13 characters!")
                            "█"))
   (pslide
+   #:comments ("What if we want to list all the members of the variable with a single TAB in REPL? This is where code completion comes in handy!")
    (repl-input/with-output #:font-size 25
                            "#include <iostream>"
                            "std::string str = \"Hello, World!\";"

@@ -19,9 +19,9 @@
 (module+ main
   (current-page-number-font (make-object font% 25 'default))
   (main-title)
-  (title-only-slide #:title "What is ClangRepl")
+  (title-only-slide #:title "What is ClangRepl?")
   (what-is-clang-repl)
-  (title-only-slide #:title "What we achieved")
+  (title-only-slide #:title "What have we achieved?")
   (demo)
   (contributions)
   ;; (title-only-slide #:title "Steps")
