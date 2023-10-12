@@ -6,7 +6,7 @@
 (define (demo)
   (for ([i (list "Mo⇥" "ModulePointerAndOffsetLessThanFunctionObject")])
     (pslide #:title "Basic Code Completion"
-            #:comments ("When LLVM 18 is released, you will be able to complete a rather long class name when you want to use it to create an instance. As in this example, you have the class from lldb called ModulePointerAndOffsetLessThanFunctionObject. You can simply type Mo and hit tab and then you get the rest completed. ")
+            #:comments ("When LLVM 18 is released, you will be able to complete a rather long class name when you want to create an instance of it. As in this example, you have the class from lldb called ModulePointerAndOffsetLessThanFunctionObject. You can simply type Mo, hit tab and then you get the rest completed. ")
             #:go (coord 0.15 0.4 'lt)
             (repl-input #:font-size 25 "class ModulePointerAndOffsetLessThanFunctionObject{ ... };"
                         i)))
