@@ -9,9 +9,11 @@
 
 (define (what-sema-comp-needs)
   (pslide #:title "What Semantic Code Completion Needs"
+          #:comments ("In order to allow it to happen, we would to know the following types of information:."
+                      "What context is the cursor in when we hit tab and How can we get the type w.r.t the cursor position?")
           #:layout 'center
-          (item (t "What context is the cursor at?"))
-          (repl-input "n█")
+          (item (t "What context is the cursor in?"))
+          (repl-input "f█")
           (repl-input "car.█")
           (item (t "How to get the type w.r.t the cursor position?"))
           (repl-input "pickOne(name1, █)")))
