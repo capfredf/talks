@@ -154,7 +154,7 @@
         (define nodes (for/list ([(t i) (in-indexed (take decls (add1 idx)))])
                         (mp:with-font font (mp:rectangle-node t #:at (mp:pt 11 (- 1 i))))))
         (pslide #:title slide-title^
-                #:comments ("Next, we import each declarations that have been defined:num3, num2, and num1 ")
+                #:comments ("Next, we import each declarations that have been defined from the main context to the current one: num3, num2, and num1 ")
                 #:go (coord 0.4 0.5 'cb)
                 data
                 #:go (coord 0.3 0.7 'cb)
