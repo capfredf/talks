@@ -36,6 +36,8 @@
    elts ...))
 
 
-(define-syntax-parse-rule (title-only-slide #:title title (~optional (~seq #:font-size font-size) #:defaults ([font-size #'80])) elts ...)
+(define-syntax-parse-rule (title-only-slide #:title title (~optional (~seq #:font-size font-size) #:defaults ([font-size #'80]))
+                                            (~optional (~seq #:comments comment) #:defaults ([comment #'""]))
+                                            elts ...)
   (parameterize ([current-font-size (+ (current-font-size) font-size)])
-    (center-slide #:title title #:comments ("") elts ...)))
+    (center-slide #:title title #:comments (comment) elts ...)))

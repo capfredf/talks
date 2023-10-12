@@ -29,10 +29,13 @@
     ;; (define edges (list (mp:edge (car nodes-to-draw) (cadr nodes-to-draw))))
 
     (for/fold ([acc 0])
-              ([i (in-list '(1 3 4 2))])
+              ([i (in-list '(1 3 4 2))]
+               [comment (in-list (list "Our first approaches closely followed how built-in code completion was implemented"
+                                       "" "" ""))])
       (let ([nodes-to-draw (take nodes-to-draw (+ acc i))])
         (define edges (map mp:edge (take nodes-to-draw (sub1 (length nodes-to-draw))) (cdr nodes-to-draw)))
         (pslide #:title "First Attempt"
+                #:comments (comment)
                 #:go (coord 0.5 0.2 'cb)
                 (parameterize ([get-current-code-font-size (lambda () (- (current-font-size) 10))])
                   (repl-input "int num = 42;" input))
@@ -58,6 +61,7 @@
 
     (define edges (map mp:edge (take nodes-to-draw (sub1 (length nodes-to-draw))) (cdr nodes-to-draw)))
     (pslide #:title "First Attempt"
+            #:comments ("The problem with this approach is we had to write too much code")
             #:go (coord 0.5 0.2 'cb)
             (parameterize ([get-current-code-font-size (lambda () (- (current-font-size) 10))])
               (repl-input "int num = 42;" input))

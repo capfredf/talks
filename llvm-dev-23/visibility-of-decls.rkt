@@ -14,7 +14,7 @@
 (define deltas-cursor (list "int num1 = 84;" "int num2 = 76;" "int num3 = 42;" "int res = 1 + n█ "))
 (define (side-by-side)
   (pslide #:title slide-title
-          #:comments ("The challenge we faced was that the code completion system couldn't see the declarations defined before the current line. To illustrate the problem, here we compare code completion in a regular file with that in REPL using the same content")
+          #:comments ("One challenge we faced is that the code completion system couldn't see the declarations defined before the current line. To illustrate the problem, here we compare code completion in a regular file with that in REPL using the same content")
           #:go (coord 0.2 0.4 'lt)
           (apply code-block deltas #:font-size 25)
           #:go (coord 0.5 0.4 'lt)
@@ -55,7 +55,7 @@
 
   (pslide #:title slide-title
           #:layout 'top
-          (t "Why does code completion fail to see previously defined declarations in REPL?")
+          (t "Why does the code completion system fail to see previously defined declarations in REPL?")
           (item "A file is one single translation unit enclosed by one ASTContext")
           (tag-pict regular-pict 'regular)
           #:go (at-find-pict 'regular lt-find 'lt #:abs-x -2 #:abs-y -2)
@@ -67,7 +67,7 @@
 
   (pslide #:title slide-title
           #:layout 'top
-          (t "Why does code completion fail to see previously defined declarations in REPL?")
+          (t "Why does the code completion system fail to see previously defined declarations in REPL?")
           (item "A REPL session contains multiple partial translation units enclosed by two ASTContexts")
           (tag-pict repl-pict 'pict)
           #:go (at-find-pict 'pict lt-find 'lt #:abs-x -2 #:abs-y -2)

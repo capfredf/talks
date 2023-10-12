@@ -9,9 +9,7 @@
 
 
 (define (contributions)
-  (pslide #:title "Contributions"
-          (item "Overcame challenges of using Sema/CodeComplete in REPL to implement basic code completion")
-          (item "Utilized key structures in Sema for semantic code completion")))
+  (pslide (para "Overcame challenges of reusing Sema/CodeComplete in REPL to implement code completion")))
 
 (module+ main
   (contributions))

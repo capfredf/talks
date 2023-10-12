@@ -11,10 +11,9 @@
   (pslide ;;
    ;; (item "ClangRepl is a C++ interpreter inspired by Cling.")
    ;; (item "It feature a REPL that let C++ programmers develop software in an exploratory manner")
-   #:comments ("For starters, let's chat a little more about ClangRepl, since not everyone here
-knows what it is. ClangRepl is fundamentally an interpreter built-up llvm
+   #:comments ("ClangRepl is fundamentally an interpreter built upon llvm
 compiler pipeline, It allows C++ programmres to an exploratory manner. Like
-here, we defined a string, and use it as a part of content we print out to the
+here, we defined a string, and used it as a part of content we printed out to the
 standand output.")
    (repl-input/with-output #:font-size 25
                            "#include <iostream>"

@@ -12,8 +12,8 @@
           #:layout 'center
           (item "Solved the visibility issue with ASTImporter and ExternalSource")
           (item "Enabled code completion in top level expressions with a new CompletionContext")
-          (item "Leveraged Sema/* modules to achieve semantic code completions")
-          (item "Concise implemenation with minimal invasive changes")))
+          (item "Leveraged Sema modules to achieve semantic code completions")
+          (item "Concise implementation with minimal invasive changes")))
 
 (module+ main
   (conclusions))
