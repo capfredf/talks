@@ -9,7 +9,7 @@
 
 
 (define (contributions)
-  (pslide (para "Overcame challenges of reusing Sema/CodeComplete in REPL to implement code completion")))
+  (pslide (para "Overcame challenges of reusing Sema/CodeComplete to implement code completion in REPL")))
 
 (module+ main
   (contributions))

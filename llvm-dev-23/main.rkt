@@ -19,11 +19,12 @@
 (module+ main
   (current-page-number-font (make-object font% 25 'default))
   (main-title)
-  (title-only-slide #:title "What is ClangRepl?" #:comments "For starters, let's chat a little more about ClangRepl, since not everyone here knows what it is. ")
+  (title-only-slide #:title "What is Clang-Repl?" #:comments "For starters, let's talk a little bit about ClangRepl, since not everyone here knows what it is. ")
   (what-is-clang-repl)
   (title-only-slide #:title "What have we achieved?" #:font-size 40)
   (demo)
   (contributions)
+  (title-only-slide #:title "Challenges")
   ;; (title-only-slide #:title "Steps")
   (visibility-of-decls)
   (new-context)

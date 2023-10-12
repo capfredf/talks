@@ -12,7 +12,7 @@
    ;; (item "ClangRepl is a C++ interpreter inspired by Cling.")
    ;; (item "It feature a REPL that let C++ programmers develop software in an exploratory manner")
    #:comments ("ClangRepl is fundamentally an interpreter built upon llvm
-compiler pipeline, It allows C++ programmres to an exploratory manner. Like
+compiler pipeline, It allows C++ programmres to develop programs in an interactive exploratory manner. Like
 here, we defined a string, and used it as a part of content we printed out to the
 standand output.")
    (repl-input/with-output #:font-size 25

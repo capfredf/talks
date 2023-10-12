@@ -30,8 +30,10 @@
 
     (for/fold ([acc 0])
               ([i (in-list '(1 3 4 2))]
-               [comment (in-list (list "Our first approaches closely followed how built-in code completion was implemented"
-                                       "" "" ""))])
+               [comment (in-list (list "Our first approaches closely followed how built-in code completion was implemented. First, we create an incremental compiler instance"
+                                       "Next we do lot of configurations, among which we set the code completion point and create our own completion consumer"
+                                       "Then we prepare a syntax only action for parsing and enable code completion in the begining of parsing."
+                                       "when we reach the code completion point, the process complete results gets invoked"))])
       (let ([nodes-to-draw (take nodes-to-draw (+ acc i))])
         (define edges (map mp:edge (take nodes-to-draw (sub1 (length nodes-to-draw))) (cdr nodes-to-draw)))
         (pslide #:title "First Attempt"

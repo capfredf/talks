@@ -33,7 +33,7 @@
                [comment (in-list (list "Luckliy, after some digging, we found ASTUnit as our current solution. Firstly, we create an ASTUnit from a new incremenl compiler instance."
                                        "Next, invoke its method codeComplete with proper arguments"
                                        "let it do heavy-lifting jobs for us under the hood"
-                                       "when we reach the completion point, our processCompleteResult method gets invoked."))])
+                                       "In the end, our processCompleteResult method gets invoked."))])
       (let ([extras (take extras (+ acc i))])
         (define edges (map mp:edge (take extras (sub1 (length extras))) (cdr extras)))
         (pslide #:title "Using ASTUnit"
@@ -62,7 +62,7 @@
     ;; (define left-nodes (list ccc-at-node act-node ccc-node))
     (define edges (map mp:edge (take extras (sub1 (length extras))) (cdr extras)))
     (pslide #:title "Using ASTUnit"
-            #:comments ("As you can see, the code we had to write is significant less than the previous version. This approach is used by other big clients as well. ")
+            #:comments ("As you can see, the code we had to write is significantly less than the previous version. This approach is used by other big clients as well. ")
             #:go (coord 0.5 0.2 'cb)
             (repl-input "int num = 42;" input)
             #:go (coord 0.08 0.23 'lt)
