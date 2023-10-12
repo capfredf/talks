@@ -61,6 +61,8 @@
             #:go (coord 0.5 0.2 'cb)
             (parameterize ([get-current-code-font-size (lambda () (- (current-font-size) 10))])
               (repl-input "int num = 42;" input))
+            #:go (coord 0.08 0.23 'lt)
+            (hc-append (mp:draw (my-job-node "       ")) (text "New Code" 'default 20))
             #:go (coord 0.15 0.5 'cb)
             (apply mp:draw (append nodes-to-draw edges))))
 
