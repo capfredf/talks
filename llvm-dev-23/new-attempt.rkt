@@ -28,15 +28,17 @@
       [results (regular-node "ReplCodeCompletionConsumer::ProcessCompletionResults" #:left-of trigger-completion-node)])
     ;; (define ccc-node (mp:with-font font (mp:rectangle-node "New ReplCodeCompletion" #:below act-node)))
     ;; (define left-nodes (list ccc-at-node act-node ccc-node))
-    (for ([i (in-range (length extras))])
-      (let ([extras (take extras (add1 i))])
+    (for/fold ([acc 0])
+              ([i (in-list '(1 1 3 2))])
+      (let ([extras (take extras (+ acc i))])
         (define edges (map mp:edge (take extras (sub1 (length extras))) (cdr extras)))
         (pslide #:title "Using ASTUnit"
                 #:go (coord 0.5 0.2 'cb)
                 (repl-input "int num = 42;" input)
                 #:go (coord 0.23 0.5 'cb)
                 (apply mp:draw extras edges;;(append left-nodes edges (list ASTUnitCC-node) extras)
-                       )))))
+                       )))
+      (+ acc i)))
   (define (static)
     (define-sequence-nodes extras
       ;; [compiler-instance-node (mp:with-font font (mp:rectangle-node "New IncrementalCompilerInstance"))]
@@ -57,6 +59,8 @@
     (pslide #:title "Using ASTUnit"
             #:go (coord 0.5 0.2 'cb)
             (repl-input "int num = 42;" input)
+            #:go (coord 0.08 0.23 'lt)
+            (hc-append (mp:draw (my-job-node "       ")) (text "New Code" 'default 20))
             #:go (coord 0.23 0.5 'cb)
             (apply mp:draw extras edges;;(append left-nodes edges (list ASTUnitCC-node) extras)
                    )))
