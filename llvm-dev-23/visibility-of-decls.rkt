@@ -21,6 +21,7 @@
           (apply repl-input deltas #:font-size 25))
 
   (pslide #:title slide-title
+          #:comments ("The difference is that the code completion system can see all the declarations defined in the file but in REPL, it can't see any declarations defined before the current line")
           #:go (coord 0.2 0.4 'lt)
           (tag-pict (apply code-input/with-output deltas-over #:font-size 25)
                     'left)
@@ -54,8 +55,8 @@
 
   (pslide #:title slide-title
           #:layout 'top
-          (t "Why does code completion fail to see previously defined declaration in REPL?")
-          (item "A file is one single translation unit defined by one ASTContext")
+          (t "Why does code completion fail to see previously defined declarations in REPL?")
+          (item "A file is one single translation unit enclosed by one ASTContext")
           (tag-pict regular-pict 'regular)
           #:go (at-find-pict 'regular lt-find 'lt #:abs-x -2 #:abs-y -2)
           (tag-pict (rectangle (+ 4 (pict-width regular-pict)) (+ 4 (pict-height regular-pict)) #:border-color "red" #:border-width 4) 'highlight)
@@ -66,8 +67,8 @@
 
   (pslide #:title slide-title
           #:layout 'top
-          (t "Why does code completion fail to see previously defined declaration in REPL?")
-          (item "A REPL session contains multiple partial translation units defined by two ASTContexts")
+          (t "Why does code completion fail to see previously defined declarations in REPL?")
+          (item "A REPL session contains multiple partial translation units enclosed by two ASTContexts")
           (tag-pict repl-pict 'pict)
           #:go (at-find-pict 'pict lt-find 'lt #:abs-x -2 #:abs-y -2)
           (rectangle (+ 4 (pict-width repl-pict)) (+ 1 (/ (pict-height repl-pict) 4)) #:border-color "red" #:border-width 4)
@@ -136,6 +137,8 @@
             (item "use ASTImporter to import every decl from the Main ASTContext to the current one"))
 
     (pslide #:title slide-title^
+            #:comments ("to solve this issue, we resort to two methods: SetExternalSource of ASTContext and the Import method of ASTImporter"
+                        "Using the example we have here, we first make the main ast context an ExternalSource of the current ast context")
             #:go (coord 0.4 0.5 'cb)
             (apply repl-input "..." deltas  #:font-size 25)
             #:go (coord 0.3 0.7 'cb)
@@ -143,7 +146,7 @@
             #:go (coord 0.3 0.8 'cb)
             (mp:draw main-node current-node edge))
 
-    (define decls (list "num1" "num2" "num3"))
+    (define decls (list "num3" "num2" "num1"))
     (let ([deltas (cons "..." deltas)])
       (define data (tag-pict (apply repl-input deltas #:font-size 25) 'repl-input))
       (define ht (/ (pict-height data) (length deltas)))
@@ -151,6 +154,7 @@
         (define nodes (for/list ([(t i) (in-indexed (take decls (add1 idx)))])
                         (mp:with-font font (mp:rectangle-node t #:at (mp:pt 11 (- 1 i))))))
         (pslide #:title slide-title^
+                #:comments ("Next, we import each declarations that have been defined:num3, num2, and num1 ")
                 #:go (coord 0.4 0.5 'cb)
                 data
                 #:go (coord 0.3 0.7 'cb)

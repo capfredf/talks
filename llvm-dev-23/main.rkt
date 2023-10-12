@@ -21,7 +21,7 @@
   (main-title)
   (title-only-slide #:title "What is ClangRepl?")
   (what-is-clang-repl)
-  (title-only-slide #:title "What have we achieved?")
+  (title-only-slide #:title "What have we achieved?" #:font-size 40)
   (demo)
   (contributions)
   ;; (title-only-slide #:title "Steps")
