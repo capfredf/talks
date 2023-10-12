@@ -137,7 +137,7 @@
             (item "use ASTImporter to import every decl from the Main ASTContext to the current one"))
 
     (pslide #:title slide-title^
-            #:comments ("to solve this issue, we resort to two methods: SetExternalSource of ASTContext and the Import method of ASTImporter"
+            #:comments ("to solve this issue, we resorted to two methods: SetExternalSource of ASTContext and the Import method of ASTImporter"
                         "Using the example we have here, we first make the main ast context an ExternalSource of the current ast context")
             #:go (coord 0.4 0.5 'cb)
             (apply repl-input "..." deltas  #:font-size 25)
