@@ -6,6 +6,7 @@
 (define (demo)
   (for ([i (list "Mo⇥" "ModulePointerAndOffsetLessThanFunctionObject")])
     (pslide #:title "Basic Code Completion"
+            #:comments ("hello")
             #:go (coord 0.15 0.4 'lt)
             (repl-input #:font-size 25 "struct ModulePointerAndOffsetLessThanFunctionObject{ ... };"
                         i)))
@@ -19,4 +20,10 @@
                                     "template <typename T> T pickOne(T v1, T v2) {...};"
                                     j))))
 (module+ main
+  ;; (slide #:title "hello"
+  ;;        (t "hello")
+  ;;        (comment "this is a comment"))
+  ;; (slide #:title "hello2"
+  ;;        (t "hello2")
+  ;;        (comment "this is a comment2"))
   (demo))

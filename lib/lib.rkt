@@ -19,6 +19,7 @@
   (center-slide
    #:title
    title
+   #:comments ("")
    #:go (pp:coord 1/4 3/5 'lc)
    (bt authors) ...
    #:go (pp:coord 0.55 0.55 'lt #:compose (lambda (_ . picts)
@@ -26,8 +27,9 @@
    elt ...))
 
 
-(define-syntax-rule (center-slide #:title title elts ...)
+(define-syntax-rule (center-slide #:title title #:comments (comments ...) elts ...)
   (pslide
+   #:comments (comments ...)
    #:go (pp:coord 1/2 2/5 'cc)
    (para #:align 'center (parameterize ([current-font-size (+ (current-font-size) 20)])
                            (bt title)))
@@ -36,4 +38,4 @@
 
 (define-syntax-parse-rule (title-only-slide #:title title (~optional (~seq #:font-size font-size) #:defaults ([font-size #'80])) elts ...)
   (parameterize ([current-font-size (+ (current-font-size) font-size)])
-    (center-slide #:title title elts ...)))
+    (center-slide #:title title #:comments ("") elts ...)))
